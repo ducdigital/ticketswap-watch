@@ -1,0 +1,30 @@
+{
+  "name": "ticketswap-watch",
+  "version": "1.0.0",
+  "description": "Watch for new ticket on ticketswap ",
+  "main": "app.js",
+  "dependencies": {
+    "cheerio": "^0.20.0",
+    "co": "^4.6.0",
+    "co-request": "^1.0.0",
+    "lodash": "^4.13.1",
+    "node-notifier": "^4.6.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ducdigital/ticketswap-watch.git"
+  },
+  "keywords": [
+    "ticketswap"
+  ],
+  "author": "DucDigital",
+  "license": "WTFPL",
+  "bugs": {
+    "url": "https://github.com/ducdigital/ticketswap-watch/issues"
+  },
+  "homepage": "https://github.com/ducdigital/ticketswap-watch#readme"
+}
