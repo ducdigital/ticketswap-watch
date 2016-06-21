@@ -7,12 +7,14 @@ const _ = require('lodash');
 const notifier = require('node-notifier');
 
 const HOST = 'https://www.ticketswap.com';
+const EVENT_URL = '/event/lost-in-a-moment-saint-malo/7f896c0e-7fdc-41e1-a671-9fcecd39e64d';
+const CHECK_INTERVAL_MS = 200000;
 
 let fetchResult = function (link) {
   return co(function *() {
     let result = yield request({
         uri: link,
-        method: "GET"
+        method: 'GET'
     });
 
     let $ = cheerio.load(result.body);
@@ -24,9 +26,8 @@ let fetchResult = function (link) {
 let app = function () {
   return co(function* () {
     let result = yield request({
-        uri: HOST +
-        "/event/lost-in-a-moment-saint-malo/7f896c0e-7fdc-41e1-a671-9fcecd39e64d",
-        method: "GET"
+        uri: HOST + EVENT_URL,
+        method: 'GET'
     });
     let $ = cheerio.load(result.body);
     let hasData = false;
@@ -45,7 +46,7 @@ let app = function () {
         return notifier.notify({
           'title': 'Need check as robot',
           'message': key,
-        'open': key,
+          'open': key,
         });
       }
 
@@ -54,7 +55,7 @@ let app = function () {
         return notifier.notify({
           'title': 'New ticket!!!',
           'message': key,
-        'open': key,
+          'open': key,
         });
       }
 
@@ -63,4 +64,4 @@ let app = function () {
   });
 };
 
-setInterval(app, 200000);
+setInterval(app, CHECK_INTERVAL_MS);
