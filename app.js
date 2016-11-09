@@ -10,12 +10,22 @@ const HOST = 'https://www.ticketswap.com';
 const EVENT_URL = '/event/flume-world-tour/1afe7e5c-2609-43e6-ae18-f466109fdb13';
 const CHECK_INTERVAL_MS = 200000;
 
+let cookieJar = request.jar();
+
+let buildRequest = function (uri, method) {
+  return request({
+    uri: uri,
+    method: method,
+    jar: cookieJar,
+    headers: {
+      'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.71 Safari/537.36',
+    }
+  });
+};
+
 let fetchResult = function (link) {
   return co(function *() {
-    let result = yield request({
-        uri: link,
-        method: 'GET'
-    });
+    let result = yield buildRequest(link, 'GET');
 
     return cheerio.load(result.body);
   });
@@ -46,10 +56,7 @@ let botAction = {
 
 let app = function () {
   return co(function* () {
-    let result = yield request({
-        uri: HOST + EVENT_URL,
-        method: 'GET'
-    });
+    let result = yield buildRequest(HOST + EVENT_URL, 'GET');
 
     let $ = cheerio.load(result.body);
     let hasData = false;
